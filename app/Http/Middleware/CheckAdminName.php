@@ -6,6 +6,9 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Models\Permission;
 
 class CheckAdminName
 {
@@ -17,11 +20,21 @@ class CheckAdminName
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        if (Auth::check() && Auth::user()->perfil === 5) {
-            return $next($request);
-        }
+{
+    $user = Auth::user();
+    $routeName = Route::currentRouteName();
 
-        abort(403, 'Acesso negado.');
+    if ($user && $this->hasPermission($user->id, $routeName)) {
+        return $next($request);
+    }
+
+    abort(403, 'Acesso negado.');
+}
+
+    private function hasPermission($userId, $routeName)
+    {
+        return Permission::where('user_id', $userId)
+            ->where('route_name', $routeName)
+            ->exists();
     }
 }

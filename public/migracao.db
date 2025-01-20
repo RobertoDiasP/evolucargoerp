@@ -1,0 +1,64 @@
+CREATE TABLE Produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_produto VARCHAR(155) NOT NULL UNIQUE,
+    sku VARCHAR(155) NOT NULL,
+    descricao_resumida VARCHAR(255),
+    descricao_completa LONGTEXT,
+    codigogrupo INT,
+    codigosubgrupo INT,
+    codigofamilia INT,
+    codigomarca INT,
+    codigounidade INT,
+    imobilizado VARCHAR(155),
+    peso_bruto DECIMAL(15,5) DEFAULT 0,
+    peso_liquido DECIMAL(15,5) DEFAULT 0,
+    altura DECIMAL(15,5) DEFAULT 0,
+    comprimento DECIMAL(15,5) DEFAULT 0,
+    largura DECIMAL(15,5) DEFAULT 0,
+    fator_preco DECIMAL(15,5) DEFAULT 0,
+    status VARCHAR(155) NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    codigobarras VARCHAR(155),
+    csosn VARCHAR(4),
+    cst_pis VARCHAR(3),
+    cst_cofins VARCHAR(3),
+    aliq_ipi DECIMAL(15,5) DEFAULT 0,
+    cst_ipi VARCHAR(3),
+    cfop VARCHAR(15),
+
+    -- Referências às tabelas de relacionamento
+    FOREIGN KEY (codigogrupo) REFERENCES Grupo(id),
+    FOREIGN KEY (codigosubgrupo) REFERENCES Subgrupo(id),
+    FOREIGN KEY (codigofamilia) REFERENCES Familia(id),
+    FOREIGN KEY (codigomarca) REFERENCES Marca(id),
+    FOREIGN KEY (codigounidade) REFERENCES Unidade(id),
+
+);
+
+CREATE TABLE Grupo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Subgrupo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    grupo_id INT,
+    nome VARCHAR(255) NOT NULL,
+    FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
+);
+
+CREATE TABLE Marca (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Unidade (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Fornecedor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
