@@ -26,7 +26,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    return view('welcome');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/perfil/index', [ClienteController::class, 'create'])->name('perfil.index');

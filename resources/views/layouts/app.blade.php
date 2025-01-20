@@ -91,9 +91,9 @@
                                 <a href="{{ route('curso.index') }}" class="dropdown-item">Cursos</a>
                                 <a href="{{ route('adm.index') }}" class="dropdown-item">Compras</a>
 
-
-                                <a href="{{ route('adm.index') }}" class="dropdown-item">Adm</a>
-
+                                @if (auth()->check() && auth()->user()->perfil == 5)
+                                    <a href="{{ route('adm.index') }}" class="dropdown-item">Adm</a>
+                                @endif
 
                                 <hr>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -112,29 +112,32 @@
                 </div>
             </div>
         </nav>
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container justify-content-center">
-                <ul class="list-group list-group-horizontal" style=" list-style-type: none;">
-                    <li class="btn btn-outline-info m-2 ">
-                        <a href="{{ route('subtipo.index') }}" class="navbaradm">
-                            Subtipo Curso
-                        </a>
-                    </li>
-                    <li class="btn btn-outline-info m-2">
-                        <a href="{{ route('tipo.index') }}" class="navbaradm">
-                            Tipo Curso
-                        </a>
-                    </li>
-                    <li class="btn btn-outline-info m-2">
-                        <a href="{{ route('curso.index') }}" class="navbaradm">
-                            Curso
-                        </a>
-                    </li>
-                    <li class="btn btn-outline-info m-2">Aulas</li>
-                    <li class="btn btn-outline-info m-2">Pagamentos</li>
-                </ul>
-            </div>
-        </nav>
+
+        @if (auth()->check() && auth()->user()->perfil == 5)
+            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+                <div class="container justify-content-center">
+                    <ul class="list-group list-group-horizontal" style=" list-style-type: none;">
+                        <li class="btn btn-outline-info m-2 ">
+                            <a href="{{ route('subtipo.index') }}" class="navbaradm">
+                                Subtipo Curso
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-info m-2">
+                            <a href="{{ route('tipo.index') }}" class="navbaradm">
+                                Tipo Curso
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-info m-2">
+                            <a href="{{ route('curso.index') }}" class="navbaradm">
+                                Curso
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-info m-2">Aulas</li>
+                        <li class="btn btn-outline-info m-2">Pagamentos</li>
+                    </ul>
+                </div>
+            </nav>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
