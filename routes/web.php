@@ -5,6 +5,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\AdmController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
         Route::middleware(['auth', 'admin.name'])->group(function () {
             Route::get('/adm', [AdmController::class, 'index'])->name('adm.index');
         });
+
+        Route::get('/produtos', [ProdutoController::class,'index'])->name('produto.index');
+
 
         Route::get('/curso',[CursoController::class, 'index'])->name('curso.index');
 
