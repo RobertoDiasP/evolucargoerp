@@ -9,7 +9,11 @@
                 </div>
             </div>
         </div>
-
+    <div class="row justify-content-end mt-2">
+        <div class="col-1">
+            <a href="{{ route('produto.indexp') }}" class="btn btn-success">Novo</a>
+        </div>
+    </div>
         <div class="row justify-content-center mt-5">
             <div class="col">
                 <div class="card p-2">

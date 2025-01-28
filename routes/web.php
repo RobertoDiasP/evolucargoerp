@@ -52,9 +52,17 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::get('/produtos', [ProdutoController::class,'index'])->name('produto.index');
+        Route::get('/produtosp', [ProdutoController::class,'indexp'])->name('produto.indexp');
+        Route::post('/produtos', [ProdutoController::class, 'store'])->name('produtos.store');
+
+        Route::get('/produtos/config', [ProdutoController::class,'indexConfig'])->name('produtoconfig.index');
+        
 
 
         Route::get('/curso',[CursoController::class, 'index'])->name('curso.index');
+
+        Route::post('/grupo/store',[ProdutoController::class,'storeGrupo' ])->name('grupo.store');
+
 
 });
 
