@@ -20,9 +20,7 @@ class Produto extends Model
          'descricao_completa',
          'codigogrupo',
          'codigosubgrupo',
-         'codigofamilia',
          'codigomarca',
-         'codigounidade',
          'imobilizado',
          'peso_bruto',
          'peso_liquido',
@@ -52,18 +50,11 @@ class Produto extends Model
          return $this->belongsTo(Subgrupo::class, 'codigosubgrupo');
      }
  
-     public function familia()
-     {
-         return $this->belongsTo(Familia::class, 'codigofamilia');
-     }
+    
  
      public function marca()
      {
          return $this->belongsTo(Marca::class, 'codigomarca');
      }
- 
-     public function unidade()
-     {
-         return $this->belongsTo(Unidade::class, 'codigounidade');
-     }
+
 }

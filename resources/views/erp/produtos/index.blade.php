@@ -21,28 +21,27 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="table-secondary">Descrição</th>
-                                <th class="table-secondary">Descrição</th>
-                                <th class="table-secondary">Descrição</th>
-                                <th class="table-secondary">Descrição</th>
-                                <th class="table-secondary">Descrição</th>
+                                <th class="table-secondary">Codigo produto</th>
+                                <th class="table-secondary">Descricao</th>
+                                <th class="table-secondary">SKU</th>
+                                <th class="table-secondary">Subgrupo</th>
+                                <th class="table-secondary">Grupo</th>
+                                <th class="table-secondary">Marca</th>
+                                <th class="table-secondary">*</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                            </tr>
-                            <tr>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                                <td>teste 1</td>
-                            </tr>
+                            @foreach ($produto as $p )     
+                                <tr>
+                                    <td>{{$p->codigo_produto}}</td>
+                                    <td>{{ $p->descricao_resumida }}</td>
+                                    <td>{{ $p->sku }}</td>
+                                    <td>{{ $p->subgrupo->nome }}</td>
+                                    <td>{{ $p->grupo->nome }}</td>
+                                    <td>{{ $p->marca->nome }}</td>
+                                    <td><button class="btn btn-warning">Editar</button></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

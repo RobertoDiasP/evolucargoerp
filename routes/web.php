@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/produtos', [ProdutoController::class,'index'])->name('produto.index');
         Route::get('/produtosp', [ProdutoController::class,'indexp'])->name('produto.indexp');
-        Route::post('/produtos', [ProdutoController::class, 'store'])->name('produtos.store');
+        Route::post('/produtos/store', [ProdutoController::class, 'store'])->name('produtos.store');
 
         Route::get('/produtos/config', [ProdutoController::class,'indexConfig'])->name('produtoconfig.index');
         
@@ -63,7 +63,8 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/grupo/store',[ProdutoController::class,'storeGrupo' ])->name('grupo.store');
         Route::post('/subgrupo/store',[ProdutoController::class,'storeSubGrupo' ])->name('subgrupo.store');
-
+        Route::post('/marca/store',[ProdutoController::class,'storeMarca' ])->name('marca.store');
+        Route::post('/unidade/store',[ProdutoController::class,'storeUnidade' ])->name('unidade.store');
 
 });
 
