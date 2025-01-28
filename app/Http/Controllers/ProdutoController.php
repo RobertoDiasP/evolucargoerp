@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
 use App\Models\Produto;
+use App\Models\Subgrupo;
 
 class ProdutoController extends Controller
 {
@@ -57,8 +58,9 @@ class ProdutoController extends Controller
     public function indexConfig()
     {
         $grupo = Grupo::all();
+        $subgrupo = Subgrupo::all();
 
-    return view('erp.produtos.config.index', compact('grupo'));
+    return view('erp.produtos.config.index', compact('grupo','subgrupo'));
         
     }
 
@@ -68,8 +70,24 @@ class ProdutoController extends Controller
             'nome' => 'required|string',
            
         ]);
+
         Grupo::create($validated);
         
         return redirect()->route('produtoconfig.index')->with('success', 'Grupo cadastrado com sucesso!');
+    }
+
+    public function storeSubGrupo(Request $request)
+    {
+        // Validação dos dados recebidos
+        $validated = $request->validate([
+            'grupo_id' => 'required|exists:grupos,id',  // Certifique-se de que o grupo_id é válido e existe na tabela de grupos
+            'nome' => 'required|string|max:255',         // O nome do subgrupo é obrigatório e é uma string
+        ]);
+
+        // Criação do novo subgrupo
+        Subgrupo::create($validated);
+
+        // Redirecionamento com sucesso
+        return redirect()->route('produtoconfig.index')->with('success', 'Subgrupo cadastrado com sucesso!');
     }
 }

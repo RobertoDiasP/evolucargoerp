@@ -15,30 +15,19 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Subgrupo</th>
+                                <th scope="col">Grupo</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($subgrupo as $sg)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <th scope="row">{{ $sg->id }}</th>
+                                <td>{{ $sg->nome }}</td>
+                                <td>{{ $sg->grupo->nome }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subgrupoModal">
@@ -55,7 +44,7 @@
                     </h6>
                 </div>
                 <div class="card-body">
-                <table class="table">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Id</th>
@@ -63,12 +52,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($grupo as $g)
+                            @foreach ($grupo as $g)
                             <tr>
                                 <th scope="row">{{ $g->id }}</th>
                                 <td>{{ $g->nome }}</td>
                             </tr>
-                        @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#grupoModal">
@@ -125,13 +114,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{ route('subgrupo.store') }}" method="POST">
+                    @csrf
 
+                    <!-- Campo de Nome do Subgrupo -->
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
+
+                    <!-- Campo de Seleção de Grupo -->
+                    <select class="form-select mt-3" name="grupo_id" required aria-label="Grupo">
+                        <option value="" selected disabled>Selecione um Grupo</option>
+                        @foreach ($grupo as $g)
+                        <option value="{{ $g->id }}">{{ $g->nome }}</option>
+                        @endforeach
+                    </select>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -144,13 +146,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('grupo.store') }}"  method="POST">
-                @csrf
+                <form action="{{ route('grupo.store') }}" method="POST">
+                    @csrf
                     <label for="nome" class="form-label">Nome</label>
                     <input type="text" class="form-control" id="nome" name="nome" required>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit"class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>

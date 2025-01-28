@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/curso',[CursoController::class, 'index'])->name('curso.index');
 
         Route::post('/grupo/store',[ProdutoController::class,'storeGrupo' ])->name('grupo.store');
+        Route::post('/subgrupo/store',[ProdutoController::class,'storeSubGrupo' ])->name('subgrupo.store');
 
 
 });
