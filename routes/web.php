@@ -31,6 +31,10 @@ Route::get('/home', function () {
     return view('welcome');
 });
 
+Route::get('/mobile', function () {
+    return view('mobile');
+})->name('mobile');
+
 Route::middleware('auth')->group(function () {
     Route::get('/perfil/index', [ClienteController::class, 'create'])->name('perfil.index');
     Route::get('/clientes/index', [ClienteController::class, 'index'])->name('clientes.index');
@@ -69,9 +73,7 @@ Route::middleware('auth')->group(function () {
         
         
     });     
-    Route::get('/mobile', function () {
-        return view('mobile');
-    })->name('mobile');
+    
 
 Auth::routes();
 
