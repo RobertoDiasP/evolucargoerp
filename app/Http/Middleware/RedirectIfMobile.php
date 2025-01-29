@@ -10,6 +10,11 @@ class RedirectIfMobile
 {
     public function handle(Request $request, Closure $next)
     {
+        // Se a rota já for /mobile, não faz nada
+        if ($request->is('mobile')) {
+            return $next($request);
+        }
+
         // Detecta se o acesso é feito de um dispositivo móvel
         if ($this->isMobileDevice($request)) {
             return redirect('/mobile');
