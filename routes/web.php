@@ -65,8 +65,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/subgrupo/store',[ProdutoController::class,'storeSubGrupo' ])->name('subgrupo.store');
         Route::post('/marca/store',[ProdutoController::class,'storeMarca' ])->name('marca.store');
         Route::post('/unidade/store',[ProdutoController::class,'storeUnidade' ])->name('unidade.store');
+        
+        Route::get('/mobile', function () {
+            return view('mobile');
+        })->name('mobile');
+        
 
-});
+});     
 
 Auth::routes();
 
