@@ -92,7 +92,7 @@
                                 <a href="{{ route('adm.index') }}" class="dropdown-item">Compras</a>
 
                                 @if (auth()->check() && auth()->user()->perfil == 5)
-                                    <a href="{{ route('adm.index') }}" class="dropdown-item">Adm</a>
+                                <a href="{{ route('adm.index') }}" class="dropdown-item">Adm</a>
                                 @endif
 
                                 <hr>
@@ -114,29 +114,35 @@
         </nav>
 
         @if (auth()->check() && auth()->user()->perfil == 5)
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-                <div class="container justify-content-center">
-                    <ul class="list-group list-group-horizontal" style=" list-style-type: none;">
-                        <li class="btn btn-outline-info m-2 ">
-                            <a href="{{ route('subtipo.index') }}" class="navbaradm">
-                                Subtipo Curso
-                            </a>
-                        </li>
-                        <li class="btn btn-outline-info m-2">
-                            <a href="{{ route('tipo.index') }}" class="navbaradm">
-                                Tipo Curso
-                            </a>
-                        </li>
-                        <li class="btn btn-outline-info m-2">
-                            <a href="{{ route('curso.index') }}" class="navbaradm">
-                                Curso
-                            </a>
-                        </li>
-                        <li class="btn btn-outline-info m-2">Aulas</li>
-                        <li class="btn btn-outline-info m-2">Pagamentos</li>
-                    </ul>
-                </div>
-            </nav>
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <ul class="list-group list-group-horizontal" style=" list-style-type: none;">
+                    <li class="dropdown ">
+                        <a class="btn btn-outline-custom m-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Produto
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('produto.indexp') }}">Cadastro Produto</a></li>
+                            <li><a class="dropdown-item" href="{{ route('produtoconfig.index') }}">Config</a></li>
+                            <li><a class="dropdown-item" href="{{ route('produto.index') }}">Consulta</a></li>
+                        </ul>
+                    </li>
+                    <li class="btn btn-outline-info m-2">
+                        <a href="{{ route('tipo.index') }}" class="navbaradm">
+                            Tipo Curso
+                        </a>
+                    </li>
+                    <li class="btn btn-outline-info m-2">
+                        <a href="{{ route('curso.index') }}" class="navbaradm">
+                            Curso
+                        </a>
+                    </li>
+                    <li class="btn btn-outline-info m-2">Aulas</li>
+                    <li class="btn btn-outline-info m-2">Pagamentos</li>
+                </ul>
+            </div>
+        </nav>
         @endif
         <main class="py-4">
             @yield('content')
@@ -148,12 +154,14 @@
     .btn-outline-info {
         border-color: lightsalmon !important;
         color: black !important;
+
     }
 
     .btn-outline-info:hover {
         background-color: rgb(249, 169, 99) !important;
         color: white !important;
     }
+
 
     .capitalize-text {
         text-transform: capitalize;
@@ -164,6 +172,48 @@
         /* Remove o sublinhado */
         color: inherit;
         /* Herda a cor do elemento pai */
+    }
+
+    .dropdown-item:active,
+    .dropdown-item:focus {
+        background-color: rgb(249, 169, 99) !important;
+        /* Cor desejada */
+        color: white !important;
+        /* Cor do texto */
+    }
+
+    .dropdown-item:hover {
+        background-color: rgba(249, 169, 99, 0.8) !important;
+        /* Cor um pouco mais clara ao passar o mouse */
+    }
+
+    .btn-outline-custom {
+        color: rgb(249, 169, 99);
+        /* Cor do texto */
+        border: 1px solid rgb(249, 169, 99);
+        /* Cor da borda */
+        background-color: transparent;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-outline-custom:hover {
+        background-color: rgb(249, 169, 99);
+        /* Cor de fundo ao passar o mouse */
+        color: white;
+        /* Cor do texto ao passar o mouse */
+    }
+
+    .btn-outline-custom:active {
+        background-color: rgb(249, 169, 99);
+        /* Cor de fundo ao clicar */
+        border-color: rgb(249, 169, 99);
+        color: white;
     }
 </style>
 

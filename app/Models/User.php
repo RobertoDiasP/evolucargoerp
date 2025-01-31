@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Professor::class); // Relacionamento 1-N com professores
     }
+
+    public function empresas()
+    {
+        return $this->hasMany(Empresa::class); // Um usuário pode ter várias empresas
+    }
 }
