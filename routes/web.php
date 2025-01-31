@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\AdmController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Auth;
@@ -58,9 +59,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/produtos', [ProdutoController::class,'index'])->name('produto.index');
         Route::get('/produtosp', [ProdutoController::class,'indexp'])->name('produto.indexp');
         Route::post('/produtos/store', [ProdutoController::class, 'store'])->name('produtos.store');
-
         Route::get('/produtos/config', [ProdutoController::class,'indexConfig'])->name('produtoconfig.index');
         
+
+        Route::get('/empresa/index', [EmpresaController::class, 'index'])->name('empresa.index');
 
 
         Route::get('/curso',[CursoController::class, 'index'])->name('curso.index');
