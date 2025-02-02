@@ -5,6 +5,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\AdmController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +64,11 @@ Route::middleware('auth')->group(function () {
         
 
         Route::get('/empresa/index', [EmpresaController::class, 'index'])->name('empresa.index');
+        Route::post('/empresa/store',[EmpresaController::class, 'store'])->name('empresa.store');
+        Route::get('/empresa/create', [EmpresaController::class, 'create'])->name('empresa.create');
+
+
+        Route::get('/entrada/index', [EntradaController::class, 'index'])->name('entrada.index');
 
 
         Route::get('/curso',[CursoController::class, 'index'])->name('curso.index');

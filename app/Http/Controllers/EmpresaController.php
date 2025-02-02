@@ -4,13 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
 
     public function index()
     {
-        return view('erp.empresa.index');
+        $empresa = Empresa::where('user_id', Auth::id())->get();
+        return view('erp.empresa.index', compact('empresa'));
+    }
+
+    public function create()
+    {
+        return view('erp.empresa.create');
     }
     
     public function store(Request $request)

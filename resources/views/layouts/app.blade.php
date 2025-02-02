@@ -126,16 +126,18 @@
                             <li><a class="dropdown-item" href="{{ route('produto.indexp') }}">Cadastro Produto</a></li>
                             <li><a class="dropdown-item" href="{{ route('produtoconfig.index') }}">Config</a></li>
                             <li><a class="dropdown-item" href="{{ route('produto.index') }}">Consulta</a></li>
+                            <hr>
+                            <li><a class="dropdown-item" href="{{ route('produto.index') }}">Estoque</a></li>
                         </ul>
                     </li>
                     <li class="btn btn-outline-info m-2">
-                        <a href="{{ route('tipo.index') }}" class="navbaradm">
-                            Tipo Curso
+                        <a href="{{ route('empresa.index') }}" class="navbaradm">
+                            Empresa
                         </a>
                     </li>
                     <li class="btn btn-outline-info m-2">
-                        <a href="{{ route('curso.index') }}" class="navbaradm">
-                            Curso
+                        <a href="{{ route('entrada.index') }}" class="navbaradm">
+                            Entrada
                         </a>
                     </li>
                     <li class="btn btn-outline-info m-2">Aulas</li>
