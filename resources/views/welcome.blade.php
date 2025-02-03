@@ -164,7 +164,7 @@
 <!-- tendencias -->
 
 <!-- footer -->
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <script>
     document.addEventListener("DOMContentLoaded", function() {
     // Função para simular o clique no botão
@@ -180,6 +180,7 @@
     // Executa a função a cada 4 segundos (4000 milissegundos)
     setInterval(simulateClick, 4000);
 })
+
 
 </script>
 

@@ -15,11 +15,13 @@ return [
     |
     */
 
+    'allowed_origins' => ['http://localhost:8000', 'http://127.0.0.1:8000'],  // Coloque o domínio da sua aplicação frontend
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'],
+    'allowed_headers' => ['Content-Type', 'X-Requested-With', 'Authorization'],
+    'allow_credentials' => true,
+
+
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
-
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
