@@ -23,7 +23,7 @@
                     <div class="col-8 d-flex align-items-end gap-2">
                         <div class="flex-grow-1">
                             <label for="codigo_produto" class="form-label">Fornecedor</label>
-                            <input type="text" class="form-control" id="id_fornecedor" name="id_fornecedor" disabled>
+                            <input type="text" class="form-control" id="id_fornecedor" name="id_fornecedor" >
                         </div>
                         <div>
                             <button class="btn btn-primary">Buscar</button>
@@ -35,8 +35,10 @@
                         <table class="table table-hover" id="tabela-produtos">
                             <thead>
                                 <tr>
+                                    <th>Codigo</th>
                                     <th>Produto</th>
                                     <th>Quantidade</th>
+                                    <th>Valor</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -46,7 +48,7 @@
                         </table>
                     </div>
                     <div class="row mt-2">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#produtoModal">
+                        <button type="button" onclick="clear()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#produtoModal">
                             Adicionar Produto
                         </button>
                     </div>
@@ -67,13 +69,31 @@
             <div class="modal-body">
                 <form id="formProduto">
                     <input type="hidden" id="produto_index">
-                    <div class="mb-3">
-                        <label for="produto_nome" class="form-label">Produto</label>
-                        <input type="text" class="form-control" id="produto_nome" required>
+                    <div class="mb-3 d-flex align-items-end gap-2">
+                        <div class="flex-grow-1">
+                            <div class="row">
+                                <label for="id_produto" class="form-label">Produto</label>
+                                <div class="col-2">
+                                    <input type="text" class="form-control" id="id_produto" name="id_produto" >
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" id="nome_produto" name="nome_produto" >
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary">Buscar</button>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="produto_quantidade" class="form-label">Quantidade</label>
-                        <input type="number" class="form-control" id="produto_quantidade" required>
+                    <div class="mb-3 row">
+                        <div class="col-6">
+                            <label for="produto_quantidade" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control" id="produto_quantidade" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="produto_valor" class="form-label">Valor</label>
+                            <input type="number" class="form-control" id="produto_valor" required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -92,16 +112,18 @@
     // Evento de envio do formulário do modal
     function salvar(){
         console.log('teste')
-        let produtoNome = document.getElementById('produto_nome').value;
+        let produtoId = document.getElementById('id_produto').value;
+        let produtoNome = document.getElementById('nome_produto').value;
         let produtoQuantidade = document.getElementById('produto_quantidade').value;
+        let produtoValor = document.getElementById('produto_valor').value;
         let produtoIndex = document.getElementById('produto_index').value;
 
         if (produtoIndex === '') {
             // Adicionar novo produto
-            produtos.push({ nome: produtoNome, quantidade: produtoQuantidade });
+            produtos.push({ nome: produtoNome, quantidade: produtoQuantidade, valor: produtoValor, id: produtoId });
         } else {
             // Editar produto existente
-            produtos[produtoIndex] = { nome: produtoNome, quantidade: produtoQuantidade };
+            produtos[produtoIndex] = { nome: produtoNome, quantidade: produtoQuantidade, valor: produtoValor, id: produtoId };
         }
 
         atualizarTabela();
@@ -120,8 +142,10 @@
         produtos.forEach((produto, index) => {
             let row = `
                 <tr>
-                    <td>${produto.nome}</td>
+                    <td>${produto.id}</td> 
+                    <td>${produto.nome}</td> 
                     <td>${produto.quantidade}</td>
+                    <td>${produto.valor}</td> 
                     <td>
                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#produtoModal" onclick="editarProduto(${index})">Editar</button>
                         <button class="btn btn-sm btn-danger" onclick="removerProduto(${index})">Remover</button>
@@ -138,10 +162,20 @@
         atualizarTabela();
     }
 
+    function clear(){
+        document.getElementById('id_produto').value = '';
+        document.getElementById('nome_produto').value = '';
+        document.getElementById('produto_quantidade').value = '';
+        document.getElementById('produto_valor').value = '';
+        document.getElementById('produto_index').value = '';
+    }
+
     // Função para editar produto
     function editarProduto(index) {
-        document.getElementById('produto_nome').value = produtos[index].nome;
+        document.getElementById('id_produto').value = produtos[index].id;
+        document.getElementById('nome_produto').value = produtos[index].nome;
         document.getElementById('produto_quantidade').value = produtos[index].quantidade;
+        document.getElementById('produto_valor').value = produtos[index].valor;
         document.getElementById('produto_index').value = index;
         
     }
