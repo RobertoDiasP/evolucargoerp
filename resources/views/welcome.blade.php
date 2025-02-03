@@ -13,7 +13,7 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="./../img/banner/imagem3.png" class="d-block" alt="...">
+                    <img src="./../img/banner/banner1.png" class="d-block" alt="...">
                 </div>
                 <div class="carousel-item">
                     <img src="./../img/banner/imagem2.png" class="d-block " alt="...">
@@ -178,7 +178,7 @@
     }
 
     // Executa a função a cada 4 segundos (4000 milissegundos)
-    setInterval(simulateClick, 4000);
+    setInterval(simulateClick, 6000);
 })
 
 
