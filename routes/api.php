@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntradaController;
+use App\Http\Controllers\ProdutoController;
 
 
 /*
@@ -26,3 +27,4 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware(['web', 'auth'])->get('/teste', [EntradaController::class, 'teste']);
+Route::middleware(['web', 'auth'])->get('/produtos/search', [ProdutoController::class, 'search']);

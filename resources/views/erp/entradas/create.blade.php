@@ -48,7 +48,7 @@
                         </table>
                     </div>
                     <div class="row mt-2">
-                        <button type="button" onclick="clear()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#produtoModal">
+                        <button type="button" onclick="clearForm()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#produtoModal">
                             Adicionar Produto
                         </button>
                     </div>
@@ -78,11 +78,12 @@
                                 </div>
                                 <div class="col-10">
                                     <input type="text" class="form-control" id="nome_produto" name="nome_produto" >
+                                    <ul id="sugestoes" class="list-group position-absolute w-100" style="display: none; z-index: 1000;"></ul>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-primary">Buscar</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Buscar</button>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -105,9 +106,51 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     let produtos = [];
+    let timeout = null;
 
+    $(document).ready(function () {
+        $("#nome_produto").on("input", function () {
+            clearTimeout(timeout);
+            
+            let query = $(this).val();
+            if (query.length < 2) return; // Evita buscas muito curtas
+
+            timeout = setTimeout(function () {
+                $.ajax({
+                    url: "/api/produtos/search",
+                    type: "GET",
+                    data: { q: query },
+                    success: function (data) {
+                        mostrarSugestoes(data);
+                    },
+                });
+            }, 1000); // Espera 2 segundos antes de buscar
+        });
+    });
+
+    function mostrarSugestoes(produtos) {
+        let lista = $("#sugestoes");
+        lista.empty();
+
+        if (produtos.length === 0) {
+            lista.append("<li class='list-group-item'>Nenhum produto encontrado</li>");
+        } else {
+            produtos.forEach(produto => {
+                lista.append(`<li class='list-group-item' onclick="selecionarProduto('${produto.id}', '${produto.descricao_resumida}')">${produto.descricao_resumida}</li>`);
+            });
+        }
+
+        lista.show();
+    }
+
+    function selecionarProduto(id, nome) {
+        $("#id_produto").val(id);
+        $("#nome_produto").val(nome);
+        $("#sugestoes").hide();
+    }
 
     // Evento de envio do formulário do modal
     function salvar(){
@@ -162,7 +205,8 @@
         atualizarTabela();
     }
 
-    function clear(){
+    function clearForm(){
+        console.log('teste clear')
         document.getElementById('id_produto').value = '';
         document.getElementById('nome_produto').value = '';
         document.getElementById('produto_quantidade').value = '';

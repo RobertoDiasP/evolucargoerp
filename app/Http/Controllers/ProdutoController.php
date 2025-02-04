@@ -128,4 +128,16 @@ class ProdutoController extends Controller
         return redirect()->route('produtoconfig.index')->with('success', 'Subgrupo cadastrado com sucesso!');
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        $produtos = Produto::where('descricao_resumida', 'LIKE', "%{$query}%")
+            ->orderBy('descricao_resumida', 'asc')
+            ->take(10)
+            ->get();
+
+        return response()->json($produtos);
+    }
+
 }
