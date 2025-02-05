@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8a1a6e1ac9ec1a7374769130858f7415
+class ComposerStaticInitba75aaa01769ad68c27ec3e18c55c910
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -25,10 +25,10 @@ class ComposerStaticInit8a1a6e1ac9ec1a7374769130858f7415
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '3bd81c9b8fcc150b69d8b63b4d2ccf23' => __DIR__ . '/..' . '/spatie/flare-client-php/src/helpers.php',
-        '47e1160838b5e5a10346ac4084b58c23' => __DIR__ . '/..' . '/laravel/prompts/src/helpers.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
-        'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
+        'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '47e1160838b5e5a10346ac4084b58c23' => __DIR__ . '/..' . '/laravel/prompts/src/helpers.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
         'f57d353b41eb2e234b26064d63d8c5dd' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Filesystem/functions.php',
@@ -542,24 +542,52 @@ class ComposerStaticInit8a1a6e1ac9ec1a7374769130858f7415
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AdmController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdmController.php',
+        'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
+        'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\CursoController' => __DIR__ . '/../..' . '/app/Http/Controllers/CursoController.php',
+        'App\\Http\\Controllers\\EmpresaController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmpresaController.php',
+        'App\\Http\\Controllers\\EntradaController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntradaController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\ProdutoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProdutoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
+        'App\\Http\\Middleware\\CheckAdminName' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckAdminName.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+        'App\\Http\\Middleware\\RedirectIfMobile' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfMobile.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Aula' => __DIR__ . '/../..' . '/app/Models/Aula.php',
+        'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
+        'App\\Models\\Curso' => __DIR__ . '/../..' . '/app/Models/Curso.php',
+        'App\\Models\\Empresa' => __DIR__ . '/../..' . '/app/Models/Empresa.php',
+        'App\\Models\\Entrada' => __DIR__ . '/../..' . '/app/Models/Entrada.php',
+        'App\\Models\\Entradaproduto' => __DIR__ . '/../..' . '/app/Models/Entradaproduto.php',
+        'App\\Models\\Estoque' => __DIR__ . '/../..' . '/app/Models/Estoque.php',
+        'App\\Models\\Familia' => __DIR__ . '/../..' . '/app/Models/Familia.php',
+        'App\\Models\\Grupo' => __DIR__ . '/../..' . '/app/Models/Grupo.php',
+        'App\\Models\\Marca' => __DIR__ . '/../..' . '/app/Models/Marca.php',
+        'App\\Models\\Matricula' => __DIR__ . '/../..' . '/app/Models/Matricula.php',
+        'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
+        'App\\Models\\Produto' => __DIR__ . '/../..' . '/app/Models/Produto.php',
+        'App\\Models\\Professor' => __DIR__ . '/../..' . '/app/Models/Professor.php',
+        'App\\Models\\Saida' => __DIR__ . '/../..' . '/app/Models/Saida.php',
+        'App\\Models\\Subgrupo' => __DIR__ . '/../..' . '/app/Models/Subgrupo.php',
+        'App\\Models\\SubtipoCurso' => __DIR__ . '/../..' . '/app/Models/SubtipoCurso.php',
+        'App\\Models\\TipoCurso' => __DIR__ . '/../..' . '/app/Models/TipoCurso.php',
+        'App\\Models\\Unidade' => __DIR__ . '/../..' . '/app/Models/Unidade.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
@@ -6678,9 +6706,9 @@ class ComposerStaticInit8a1a6e1ac9ec1a7374769130858f7415
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8a1a6e1ac9ec1a7374769130858f7415::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8a1a6e1ac9ec1a7374769130858f7415::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit8a1a6e1ac9ec1a7374769130858f7415::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitba75aaa01769ad68c27ec3e18c55c910::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitba75aaa01769ad68c27ec3e18c55c910::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitba75aaa01769ad68c27ec3e18c55c910::$classMap;
 
         }, null, ClassLoader::class);
     }

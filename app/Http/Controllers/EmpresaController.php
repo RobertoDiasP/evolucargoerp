@@ -40,4 +40,16 @@ class EmpresaController extends Controller
         return redirect()->route('empresa.index')->with('success', 'Empresa cadastrado com sucesso!');
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        $empresas = Empresa::where('nome', 'LIKE', "%{$query}%")
+            ->orderBy('nome', 'asc')
+            ->take(10)
+            ->get();
+
+        return response()->json($empresas);
+    }
+
 }

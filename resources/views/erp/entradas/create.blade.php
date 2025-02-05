@@ -7,27 +7,47 @@
         <div class="col-8">
             <div class="card">
                 <div class="card-header">
-                    <div class="col-3">
-                        <label for="codigo_produto" class="form-label">Numero Entrada</label>
-                        <input type="text" class="form-control" v-model="numeroEntrada" disabled>
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="codigo_produto" class="form-label">Numero Entrada</label>
+                            <input type="text" class="form-control" v-model="numeroEntrada" disabled>
+                        </div>
+                        <div class="col-9 d-flex align-items-end gap-2">
+                            <div class="flex-grow-1">
+                                <label for="codigo_produto" class="form-label">Empresa</label>
+                                <input type="text" class="form-control" v-model="empresa.nome" >
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#empresaModal" @click="clearEmpresa">
+                                <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-8 d-flex align-items-end gap-2">
+                            <div class="flex-grow-1">
+                                <label for="codigo_produto" class="form-label">Tipo Entrada</label>
+                                <input type="text" class="form-control" v-model="tipoEntrada" >
+                            </div>
+                            <div>
+                                <button class="btn btn-primary">
+                                    <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-8 d-flex align-items-end gap-2">
+                            <div class="flex-grow-1">
+                                <label for="codigo_produto" class="form-label">Fornecedor</label>
+                                <input type="text" class="form-control" v-model="fornecedor">
+                            </div>
+                            <div>
+                                <button class="btn btn-primary">
+                                    <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-8 d-flex align-items-end gap-2">
-                        <div class="flex-grow-1">
-                            <label for="codigo_produto" class="form-label">Tipo Entrada</label>
-                            <input type="text" class="form-control" v-model="tipoEntrada" disabled>
-                        </div>
-                        <div>
-                            <button class="btn btn-primary">Buscar</button>
-                        </div>
-                    </div>
-                    <div class="col-8 d-flex align-items-end gap-2">
-                        <div class="flex-grow-1">
-                            <label for="codigo_produto" class="form-label">Fornecedor</label>
-                            <input type="text" class="form-control" v-model="fornecedor">
-                        </div>
-                        <div>
-                            <button class="btn btn-primary">Buscar</button>
-                        </div>
+                    <div v-if="!entrada" class="row m-2">
+                        <button class="btn btn-primary">Salvar</button>
                     </div>
                 </div>
                 <div v-if="numeroEntrada" class="card-body">
@@ -67,7 +87,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal produto -->
 <div class="modal fade" id="produtoModal" tabindex="-1" aria-labelledby="produtoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -116,6 +136,43 @@
     </div>
 </div>
 
+<!-- modal empresa -->
+<div class="modal fade" id="empresaModal" tabindex="-1" aria-labelledby="empresaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Procurar Empresa</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form @submit.prevent="salvar">
+                    <input type="hidden" v-model="produtoIndex">
+                    <div class="mb-3 d-flex align-items-end gap-2">
+                        <div class="flex-grow-1">
+                            <div class="row">
+                                <label for="empresa" class="form-label">Empresa</label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" v-model="buscarEmpresas.nome" @input="buscarEmpresas">
+                                    <ul v-if="resultEmpresa.length" class="list-group position-absolute w-100">
+                                        <li v-for="empresa in resultEmpresa" class="list-group-item" @click="selecionarEmpresa(empresa)">
+                                            @{{ empresa.nome }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Vue.js via CDN -->
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
 
@@ -123,16 +180,20 @@
     const app = Vue.createApp({
         data() {
             return {
-                numeroEntrada: 1,
+                numeroEntrada: '',
+                empresa: {id:'', nome:""},
                 tipoEntrada: '',
                 fornecedor: '',
                 produtos: [],
                 novoProduto: { id: '', nome: '', quantidade: '', valor: '' },
+                buscaEmpresa: {id:'',nome:''},
                 produtoIndex: '',
-                sugestoes: []
+                sugestoes: [],
+                resultEmpresa: []
             };
         },
         methods: {
+
             salvar() {
                 if (this.produtoIndex === '') {
                     this.produtos.push({ ...this.novoProduto });
@@ -143,17 +204,26 @@
                 this.clearForm();
                 bootstrap.Modal.getInstance(document.getElementById('produtoModal')).hide();
             },
+
             removerProduto(index) {
                 this.produtos.splice(index, 1);
             },
+            
             editarProduto(index) {
                 this.produtoIndex = index;
                 this.novoProduto = { ...this.produtos[index] };
             },
+
             clearForm() {
                 this.novoProduto = { id: '', nome: '', quantidade: '', valor: '' };
                 this.produtoIndex = '';
             },
+            
+            clearEmpresa() {
+                this.buscarEmpresas.nome = ''
+                this.resultEmpresa = [];
+            },
+
             async buscarProdutos() {
                 if (this.novoProduto.nome.length < 2) {
                     this.sugestoes = [];
@@ -166,11 +236,29 @@
                     console.error('Erro ao buscar produtos:', error);
                 }
             },
+
             selecionarProduto(produto) {
                 this.novoProduto.id = produto.id;
                 this.novoProduto.nome = produto.descricao_resumida;
                 this.sugestoes = [];
+            },
+
+            async buscarEmpresas() {
+                try {
+                    const response = await fetch(`/api/empresa/search?q=${this.buscarEmpresas.nome}`);
+                    this.resultEmpresa = await response.json();
+                } catch (error) {
+                    console.error('Erro ao buscar Empresa:', error);
+                }
+            },
+
+            selecionarEmpresa(empresa) {
+                this.empresa.id = empresa.id;
+                this.empresa.nome = empresa.nome;
+                this.resultEmpresa = [];
             }
+           
+            
         }
     });
 

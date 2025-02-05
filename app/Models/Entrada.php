@@ -11,7 +11,7 @@ class Entrada extends Model
 
     protected $table = 'entradas';
 
-    protected $fillable = ['empresa_id', 'produto_id', 'quantidade', 'data_entrada'];
+    protected $fillable = ['empresa_id', 'produto_id', 'quantidade', 'data_entrada','id_tipoentrada'];
 
     // Relacionamento com Empresa
     public function empresa()
@@ -28,5 +28,9 @@ class Entrada extends Model
     public function produtos()
     {
         return $this->hasMany(Entradaproduto::class);
+    }
+    public function tipoEntrada()
+    {
+        return $this->belongsTo(TipoEntrada::class, 'id_tipoentrada');
     }
 }
