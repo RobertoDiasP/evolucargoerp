@@ -15,18 +15,18 @@
                         <div class="col-9 d-flex align-items-end gap-2">
                             <div class="flex-grow-1">
                                 <label for="codigo_produto" class="form-label">Empresa</label>
-                                <input type="text" class="form-control" v-model="empresa.nome" >
+                                <input type="text" class="form-control" v-model="empresa.nome">
                             </div>
                             <div>
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#empresaModal" @click="clearEmpresa">
-                                <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
+                                    <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
                                 </button>
                             </div>
                         </div>
                         <div class="col-8 d-flex align-items-end gap-2">
                             <div class="flex-grow-1">
                                 <label for="codigo_produto" class="form-label">Tipo Entrada</label>
-                                <input type="text" class="form-control" v-model="tipoEntrada" >
+                                <input type="text" class="form-control" v-model="tipoEntrada">
                             </div>
                             <div>
                                 <button class="btn btn-primary">
@@ -46,8 +46,8 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="!entrada" class="row m-2">
-                        <button class="btn btn-primary">Salvar</button>
+                    <div v-if="!numeroEntrada" class="row m-2">
+                        <button class="btn btn-primary" @click="salvarEntrada">Salvar</button>
                     </div>
                 </div>
                 <div v-if="numeroEntrada" class="card-body">
@@ -181,12 +181,23 @@
         data() {
             return {
                 numeroEntrada: '',
-                empresa: {id:'', nome:""},
+                empresa: {
+                    id: '',
+                    nome: ""
+                },
                 tipoEntrada: '',
                 fornecedor: '',
                 produtos: [],
-                novoProduto: { id: '', nome: '', quantidade: '', valor: '' },
-                buscaEmpresa: {id:'',nome:''},
+                novoProduto: {
+                    id: '',
+                    nome: '',
+                    quantidade: '',
+                    valor: ''
+                },
+                buscaEmpresa: {
+                    id: '',
+                    nome: ''
+                },
                 produtoIndex: '',
                 sugestoes: [],
                 resultEmpresa: []
@@ -196,9 +207,13 @@
 
             salvar() {
                 if (this.produtoIndex === '') {
-                    this.produtos.push({ ...this.novoProduto });
+                    this.produtos.push({
+                        ...this.novoProduto
+                    });
                 } else {
-                    this.produtos[this.produtoIndex] = { ...this.novoProduto };
+                    this.produtos[this.produtoIndex] = {
+                        ...this.novoProduto
+                    };
                 }
 
                 this.clearForm();
@@ -208,17 +223,24 @@
             removerProduto(index) {
                 this.produtos.splice(index, 1);
             },
-            
+
             editarProduto(index) {
                 this.produtoIndex = index;
-                this.novoProduto = { ...this.produtos[index] };
+                this.novoProduto = {
+                    ...this.produtos[index]
+                };
             },
 
             clearForm() {
-                this.novoProduto = { id: '', nome: '', quantidade: '', valor: '' };
+                this.novoProduto = {
+                    id: '',
+                    nome: '',
+                    quantidade: '',
+                    valor: ''
+                };
                 this.produtoIndex = '';
             },
-            
+
             clearEmpresa() {
                 this.buscarEmpresas.nome = ''
                 this.resultEmpresa = [];
@@ -256,9 +278,34 @@
                 this.empresa.id = empresa.id;
                 this.empresa.nome = empresa.nome;
                 this.resultEmpresa = [];
+            },
+
+            async salvarEntrada() {
+                try {
+                    const response = await fetch('/api/entradas', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            empresa_id: this.empresa.id,
+                            data_entrada: new Date().toISOString().split('T')[0],
+                            id_tipoentrada: this.tipoEntrada
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.numeroEntrada = data.entrada.id;
+                        alert('Entrada salva com sucesso!');
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar entrada:', error);
+                }
             }
-           
-            
+
         }
     });
 

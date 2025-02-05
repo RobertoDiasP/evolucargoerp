@@ -30,3 +30,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['web', 'auth'])->get('/teste', [EntradaController::class, 'teste']);
 Route::middleware(['web', 'auth'])->get('/produtos/search', [ProdutoController::class, 'search']);
 Route::middleware(['web', 'auth'])->get('/empresa/search', [EmpresaController::class, 'search']);
+Route::middleware(['web', 'auth'])->post('/entradas', [EntradaController::class, 'store']);

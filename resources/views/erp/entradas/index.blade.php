@@ -11,27 +11,21 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="table-secondary">Codigo produto</th>
-                            <th class="table-secondary">Descricao</th>
-                            <th class="table-secondary">SKU</th>
-                            <th class="table-secondary">Subgrupo</th>
-                            <th class="table-secondary">Grupo</th>
-                            <th class="table-secondary">Marca</th>
+                            <th class="table-secondary">Id</th>
+                            <th class="table-secondary">Empresa</th>
+                            <th class="table-secondary">Fornecedor</th>
                             <th class="table-secondary">*</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                    @foreach ($entradas as $entrada)
                         <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>1</td>
+                            <td>{{ $entrada->id }}</td>
+                            <td>{{ $entrada->empresa->nome }}</td>
+                            <td></td>
                             <td><button class="btn btn-warning">Editar</button></td>
                         </tr>
-
+                    @endforeach
                     </tbody>
                 </table>
                 <a type="button" href="{{ route('entrada.create') }}" class="btn btn-primary">Novo</a>
