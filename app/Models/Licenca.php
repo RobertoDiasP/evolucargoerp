@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Licenca extends Model
+{
+    use HasFactory;
+    protected $fillable = ['nome', 'data_expiracao'];
+
+    public function pessoas() {
+        return $this->hasMany(Pessoa::class, 'id_licenca');
+    }
+}
