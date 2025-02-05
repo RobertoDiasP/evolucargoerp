@@ -36,4 +36,10 @@ class EntradaController extends Controller
         $user = auth()->user();  // Recupera o usuário autenticado da sessão
         return response()->json($user);
     }
+
+    public function edit($id)
+    {
+        $entrada = Entrada::findOrFail($id);
+        return view('erp.entradas.create', compact('entrada'));
+    }
 }

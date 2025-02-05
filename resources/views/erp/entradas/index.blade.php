@@ -23,7 +23,9 @@
                             <td>{{ $entrada->id }}</td>
                             <td>{{ $entrada->empresa->nome }}</td>
                             <td></td>
-                            <td><button class="btn btn-warning">Editar</button></td>
+                            <td>
+                                <a href="{{ route('entrada.edit', $entrada->id) }}" class="btn btn-warning">Editar</a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

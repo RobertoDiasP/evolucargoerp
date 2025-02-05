@@ -180,10 +180,10 @@
     const app = Vue.createApp({
         data() {
             return {
-                numeroEntrada: '',
+                numeroEntrada: "{{ $entrada->id ?? '' }}",
                 empresa: {
-                    id: '',
-                    nome: ""
+                    id: "{{ $entrada->empresa_id ?? '' }}",
+                    nome: "{{ $entrada->empresa->nome ?? '' }}"
                 },
                 tipoEntrada: '',
                 fornecedor: '',
