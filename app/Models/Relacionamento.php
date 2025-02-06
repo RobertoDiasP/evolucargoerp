@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Relacionamento extends Model
 {
     use HasFactory;
-    protected $fillable = ['pessoa_id', 'tipo_relacionamento'];
 
-    public function pessoa() {
-        return $this->belongsTo(Pessoa::class);
+    protected $table = 'relacionamentos';
+    protected $fillable = ['tipo_relacionamento', 'id_licenca'];
+
+
+    public function licenca()
+    {
+        return $this->belongsTo(Licenca::class, 'id_licenca');
     }
 
 }

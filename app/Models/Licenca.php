@@ -13,4 +13,9 @@ class Licenca extends Model
     public function pessoas() {
         return $this->hasMany(Pessoa::class, 'id_licenca');
     }
+    
+    public function relacionamentos()
+    {
+        return $this->hasMany(Relacionamento::class, 'id_licenca');
+    }
 }
