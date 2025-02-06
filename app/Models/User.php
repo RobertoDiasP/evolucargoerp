@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'perfil',
+        'id_licenca'
     ];
 
     /**
@@ -56,5 +57,9 @@ class User extends Authenticatable
     public function empresas()
     {
         return $this->hasMany(Empresa::class); // Um usuário pode ter várias empresas
+    }
+
+    public function licenca() {
+        return $this->belongsTo(Licenca::class, 'id_licenca');
     }
 }

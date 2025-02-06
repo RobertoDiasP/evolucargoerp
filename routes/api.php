@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\PessoaController;
 
 
 /*
@@ -31,3 +32,4 @@ Route::middleware(['web', 'auth'])->get('/teste', [EntradaController::class, 'te
 Route::middleware(['web', 'auth'])->get('/produtos/search', [ProdutoController::class, 'search']);
 Route::middleware(['web', 'auth'])->get('/empresa/search', [EmpresaController::class, 'search']);
 Route::middleware(['web', 'auth'])->post('/entradas', [EntradaController::class, 'store']);
+Route::middleware(['web', 'auth'])->post('/pessoas', [PessoaController::class, 'store']);
