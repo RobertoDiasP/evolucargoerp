@@ -41,6 +41,36 @@
                         <input type="email" class="form-control" v-model="pessoa.email">
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">CEP</label>
+                        <input type="text" class="form-control" v-model="pessoa.cep" @blur="buscarCep">
+                        <div v-if="spinLoad" class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Rua</label>
+                        <input type="text" class="form-control" v-model="pessoa.logradouro">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Complemento</label>
+                        <input type="text" class="form-control" v-model="pessoa.complemento">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Bairro</label>
+                        <input type="text" class="form-control" v-model="pessoa.bairro">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Estado</label>
+                        <input type="text" class="form-control" v-model="pessoa.estado">
+                    </div>
+
+
+
                     <button @click="salvarPessoa" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
@@ -60,8 +90,19 @@
                     documento: '',
                     telefone: '',
                     email: '',
-                    id_licenca: ''
+                    id_licenca: '',
+                    cep: '',
+                    logradouro: '',
+                    complemento: '',
+                    unidade: '',
+                    bairro: '',
+                    localidade: '',
+                    uf: '',
+                    estado: ''
                 },
+
+                spinLoad: false,
+
                 licencas: []
             };
         },
@@ -85,15 +126,42 @@
                         this.pessoa.nome = ''
                         this.pessoa.tipo = 'CPF'
                         this.pessoa.documento = '',
-                        this.pessoa.telefone = '',
-                        this.pessoa.email = '',
-                        this.pessoa.id_licenca = ''
+                            this.pessoa.telefone = '',
+                            this.pessoa.email = '',
+                            this.pessoa.id_licenca = ''
 
                     }
                 } catch (error) {
                     console.error('Erro ao cadastrar pessoa:', error);
                 }
+            },
+
+            async buscarCep() {
+                if (this.pessoa.cep.length === 8) {
+                this.spinLoad = true;
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${this.pessoa.cep}/json/`);
+                    const data = await response.json();
+
+                    if (!data.erro) {
+                        this.pessoa.logradouro = data.logradouro || '';
+                        this.pessoa.bairro = data.bairro || '';
+                        this.pessoa.localidade = data.localidade || '';
+                        this.pessoa.uf = data.uf || '';
+                        this.pessoa.estado = data.uf || ''; // Ajuste conforme necessário
+                    } else {
+                        alert("CEP não encontrado!");
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar CEP:", error);
+                } finally {
+                    this.spinLoad = false;
+                }
             }
+
+            },
+
+            
         },
 
         mounted() {

@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class RelacionamentoController extends Controller
 {
-    //
+    public function index()
+    {
+        
+    }
 }

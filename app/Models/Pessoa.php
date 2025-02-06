@@ -10,7 +10,8 @@ class Pessoa extends Model
     use HasFactory;
 
     protected $table = 'pessoas';
-    protected $fillable = ['nome', 'tipo', 'documento', 'telefone', 'email', 'id_licenca'];
+
+    protected $fillable = ['nome', 'tipo', 'documento', 'telefone', 'email', 'id_licenca', 'cep', 'logradouro', 'complemento', 'unidade', 'bairro', 'localidade', 'uf', 'estado'];
 
     public function relacionamentos() {
         return $this->hasMany(Relacionamento::class);

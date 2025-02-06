@@ -148,9 +148,8 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('pessoa.index') }}">Consulta Pessoa</a></li>
                             <li><a class="dropdown-item" href="{{ route('pessoa.create') }}">Cadastro Pessoa</a></li>
-                            <li><a class="dropdown-item" href="{{ route('produto.index') }}">Consulta</a></li>
                             <hr>
-                            <li><a class="dropdown-item" href="{{ route('produto.index') }}">Estoque</a></li>
+                            <li><a class="dropdown-item" href="{{ route('relacionamento.index') }}">Relacionamento</a></li>
                         </ul>
                     </li>
                     <li class="btn btn-outline-info m-2">Pagamentos</li>

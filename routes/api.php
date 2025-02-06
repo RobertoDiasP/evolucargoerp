@@ -33,3 +33,4 @@ Route::middleware(['web', 'auth'])->get('/produtos/search', [ProdutoController::
 Route::middleware(['web', 'auth'])->get('/empresa/search', [EmpresaController::class, 'search']);
 Route::middleware(['web', 'auth'])->post('/entradas', [EntradaController::class, 'store']);
 Route::middleware(['web', 'auth'])->post('/pessoas', [PessoaController::class, 'store']);
+Route::middleware(['web', 'auth'])->get('/pessoas/index', [PessoaController::class, 'buscarPessoas']);

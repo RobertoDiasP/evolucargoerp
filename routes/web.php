@@ -9,6 +9,10 @@ use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\PessoaController;
+use App\Http\Controllers\RelacionamentoController;
+use App\Models\Relacionamento;
+
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +79,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/pessoa/index', [PessoaController::class, 'index'])->name('pessoa.index');
         Route::get('/pessoa/create', [PessoaController::class, 'create'])->name('pessoa.create');
+        Route::get('/relacionamento/index', [RelacionamentoController::class, 'index'])->name('relacionamento.index');
         
 
 
