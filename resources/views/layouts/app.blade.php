@@ -135,10 +135,17 @@
                             Empresa
                         </a>
                     </li>
-                    <li class="btn btn-outline-info m-2">
-                        <a href="{{ route('entrada.index') }}" class="navbaradm">
+                    <li class="dropdown ">
+                        <a class="btn btn-outline-custom m-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Entrada
                         </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('entrada.index') }}">Consulta Entrada</a></li>
+                            <li><a class="dropdown-item" href="{{ route('entrada.create') }}">Cadastro Entrada</a></li>
+                            <hr>
+                            <li><a class="dropdown-item" href="{{ route('tipoentrada.index') }}">Tipo Entrada</a></li>
+                        </ul>
                     </li>
                     <li class="dropdown ">
                         <a class="btn btn-outline-custom m-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

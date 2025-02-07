@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\RelacionamentoController;
+use App\Http\Controllers\TipoEntradaController;
 use App\Models\Relacionamento;
 
 
@@ -76,6 +77,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/entrada/index', [EntradaController::class, 'index'])->name('entrada.index');
         Route::get('/entrada/create', [EntradaController::class, 'create'])->name('entrada.create');
         Route::get('/entrada/{id}/edit', [EntradaController::class, 'edit'])->name('entrada.edit');
+
+        Route::get('/tipoentrada/index', [TipoEntradaController::class, 'index'])->name('tipoentrada.index');
 
         Route::get('/pessoa/index', [PessoaController::class, 'index'])->name('pessoa.index');
         Route::get('/pessoa/create', [PessoaController::class, 'create'])->name('pessoa.create');
