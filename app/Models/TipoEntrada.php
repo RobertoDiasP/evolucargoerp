@@ -10,7 +10,7 @@ class TipoEntrada extends Model
     use HasFactory;
     protected $table = 'tipoentrada';
 
-    protected $fillable = ['descricao'];
+    protected $fillable = ['descricao', 'id_licenca'];
 
     /**
      * Relacionamento com a tabela 'entrada' (1 tipo de entrada pode estar em várias entradas).
@@ -18,5 +18,10 @@ class TipoEntrada extends Model
     public function entradas()
     {
         return $this->hasMany(Entrada::class, 'id_tipoentrada');
+    }
+
+    public function licenca()
+    {
+        return $this->belongsTo(Licenca::class, 'id_licenca');
     }
 }

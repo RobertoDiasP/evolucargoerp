@@ -27,7 +27,7 @@
                         <h4>Resultados:</h4>
                         <ul class="list-group">
                             <li class="list-group-item" v-for="pessoa in relacionamento" :key="pessoa.id">
-                                <strong>Tipo Entrada:</strong> @{{ pessoa.tipo_relacionamento }} <br>
+                                <strong>Tipo Entrada:</strong> @{{ pessoa.descricao }} <br>
                             </li>
                         </ul>
                     </div>
@@ -92,24 +92,24 @@
         methods: {
             async salvarEntrada(){
                 try {
-                    const response = await fetch('/api/relacionamento', {
+                    const response = await fetch('/api/tipoentrada', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         },
-                        body: JSON.stringify(this.novoRelacionamento)
+                        body: JSON.stringify(this.novoTipoEntrada)
                     });
 
                     const data = await response.json();
 
                     if (data.success) {
-                        alert('Relacionamento cadastrado com sucesso!');
-                        this.novoRelacionamento.tipo_relacionamento = ''
+                        alert('Tipo entrada cadastrado com sucesso!');
+                        this.novoTipoEntrada.tipo_entrada = ''
 
                     }
                 } catch (error) {
-                    console.error('Erro ao cadastrar Relacionamento:', error);
+                    console.error('Erro ao cadastrar Tipo entrada:', error);
                 }
             },
 
@@ -118,7 +118,7 @@
                 this.consultaRealizada = false;
 
                 try {
-                    const response = await fetch(`/api/relacionamento/index?nome=${this.filtros.tipo_relacionamento}`);
+                    const response = await fetch(`/api/tipoentrada/index?nome=${this.filtros.tipo_relacionamento}`);
                     const data = await response.json();
 
                     this.relacionamento = data;

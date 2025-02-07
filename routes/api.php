@@ -7,6 +7,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\RelacionamentoController;
+use App\Http\Controllers\TipoEntradaController;
 
 
 /*
@@ -37,3 +38,5 @@ Route::middleware(['web', 'auth'])->post('/pessoas', [PessoaController::class, '
 Route::middleware(['web', 'auth'])->get('/pessoas/index', [PessoaController::class, 'buscarPessoas']);
 Route::middleware(['web', 'auth'])->get('/relacionamento/index', [RelacionamentoController::class, 'buscarRelacionamento']);
 Route::middleware(['web', 'auth'])->post('/relacionamento', [RelacionamentoController::class, 'store']);
+Route::middleware(['web', 'auth'])->post('/tipoentrada', [TipoEntradaController::class, 'store']);
+Route::middleware(['web', 'auth'])->get('/tipoentrada/index', [TipoEntradaController::class, 'buscarTipoEntrada']);

@@ -26,10 +26,10 @@
                         <div class="col-8 d-flex align-items-end gap-2">
                             <div class="flex-grow-1">
                                 <label for="codigo_produto" class="form-label">Tipo Entrada</label>
-                                <input type="text" class="form-control" v-model="tipoEntrada">
+                                <input type="text" class="form-control" v-model="tipoEntrada.descricao">
                             </div>
                             <div>
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entradaModal">
                                     <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
                                 </button>
                             </div>
@@ -154,8 +154,44 @@
                                 <div class="col-12">
                                     <input type="text" class="form-control" v-model="buscarEmpresas.nome" @input="buscarEmpresas">
                                     <ul v-if="resultEmpresa.length" class="list-group position-absolute w-100">
-                                        <li v-for="empresa in resultEmpresa" class="list-group-item" @click="selecionarEmpresa(empresa)">
+                                        <li v-for="empresa in resultEmpresa" class="list-group-item" data-bs-dismiss="modal" @click="selecionarEmpresa(empresa)">
                                             @{{ empresa.nome }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal entrada -->
+<div class="modal fade" id="entradaModal" tabindex="-1" aria-labelledby="entradaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Tipo entrada</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form @submit.prevent="salvar">
+                    <input type="hidden" v-model="produtoIndex">
+                    <div class="mb-3 d-flex align-items-end gap-2">
+                        <div class="flex-grow-1">
+                            <div class="row">
+                                <label for="empresa" class="form-label">Tipo entrada</label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" v-model="buscarEmpresas.nome" @input="buscarEntrada">
+                                    <ul v-if="resultEntrada.length" class="list-group position-absolute w-100">
+                                        <li v-for="empresa in resultEntrada" class="list-group-item" data-bs-dismiss="modal" @click="selecionarEntrada(empresa)">
+                                            @{{ empresa.descricao }}
                                         </li>
                                     </ul>
                                 </div>
@@ -185,7 +221,10 @@
                     id: "{{ $entrada->empresa_id ?? '' }}",
                     nome: "{{ $entrada->empresa->nome ?? '' }}"
                 },
-                tipoEntrada: '',
+                tipoEntrada: {
+                    id: '',
+                    descricao: ''
+                },
                 fornecedor: '',
                 produtos: [],
                 novoProduto: {
@@ -200,7 +239,8 @@
                 },
                 produtoIndex: '',
                 sugestoes: [],
-                resultEmpresa: []
+                resultEmpresa: [],
+                resultEntrada: []
             };
         },
         methods: {
@@ -274,10 +314,26 @@
                 }
             },
 
+            async buscarEntrada() {
+                try {
+                    const response = await fetch(`/api/tipoentrada/index?q=${this.buscarEmpresas.nome}`);
+                    this.resultEntrada = await response.json();
+                } catch (error) {
+                    console.error('Erro ao buscar Empresa:', error);
+                }
+            },
+
             selecionarEmpresa(empresa) {
                 this.empresa.id = empresa.id;
                 this.empresa.nome = empresa.nome;
                 this.resultEmpresa = [];
+            },
+
+            selecionarEntrada(empresa) {
+                this.tipoEntrada.id = empresa.id;
+                this.tipoEntrada.descricao = empresa.descricao;
+                this.resultEntrada = [];
+                console.log('teste', this.tipoEntrada)
             },
 
             async salvarEntrada() {
@@ -291,7 +347,7 @@
                         body: JSON.stringify({
                             empresa_id: this.empresa.id,
                             data_entrada: new Date().toISOString().split('T')[0],
-                            id_tipoentrada: this.tipoEntrada
+                            id_tipoentrada: this.tipoEntrada.id
                         })
                     });
 

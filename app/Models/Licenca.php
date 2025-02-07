@@ -18,4 +18,10 @@ class Licenca extends Model
     {
         return $this->hasMany(Relacionamento::class, 'id_licenca');
     }
+
+    public function tipoEntradas()
+    {
+        return $this->hasMany(TipoEntrada::class, 'id_licenca');
+    }
+
 }
