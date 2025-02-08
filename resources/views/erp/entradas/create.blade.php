@@ -7,7 +7,23 @@
         <div class="col-8">
             <div class="card">
                 <div class="card-header">
-                    <div class="row">
+                    <div class="row justify-content-center mb-3 mt-3">
+                        <div class="col-4">
+                            <button class="btn btn-primary m-1" @click="salvarEntrada" :disabled="!['Criada'].includes(status)" title="Salvar">
+                                <img src="{{ asset('/icon/save-outline.svg') }}" alt="Salvar" width="24" height="24">
+                            </button>
+                            <button class="btn btn-primary m-1" :disabled="!['Criada'].includes(status)" title="Concluir">
+                                <img src="{{ asset('/icon/checkmark-circle-outline.svg') }}" alt="Salvar" width="24" height="24">
+                            </button>
+                            <button class="btn btn-primary m-1" :disabled="!['Criada', 'Concluida'].includes(status)" title="Cancelar">
+                                <img src="{{ asset('/icon/close-circle-outline.svg') }}" alt="Salvar" width="24" height="24">
+                            </button>
+                            <button class="btn btn-primary m-1" :disabled="!['Criada'].includes(status)" title="Excluir">
+                                <img src="{{ asset('/icon/trash-outline.svg') }}" alt="Salvar" width="24" height="24">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-3">
                             <label for="codigo_produto" class="form-label">Numero Entrada</label>
                             <input type="text" class="form-control" v-model="numeroEntrada" disabled>
@@ -34,20 +50,20 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="col-4 d-flex align-items-end justify-content-center status">
+                            <span :style="{ color: getStatusColor(status) }" style="font-weight: bolder; font-size:1.4rem;">@{{status}}</span>
+                        </div>
                         <div class="col-8 d-flex align-items-end gap-2">
                             <div class="flex-grow-1">
                                 <label for="codigo_produto" class="form-label">Fornecedor</label>
-                                <input type="text" class="form-control" v-model="fornecedor">
+                                <input type="text" class="form-control" v-model="pessoa.nome">
                             </div>
                             <div>
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pessoaModal">
                                     <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div v-if="!numeroEntrada" class="row m-2">
-                        <button class="btn btn-primary" @click="salvarEntrada">Salvar</button>
                     </div>
                 </div>
                 <div v-if="numeroEntrada" class="card-body">
@@ -65,7 +81,7 @@
                             <tbody>
                                 <tr v-for="(produto, index) in produtos" :key="index">
                                     <td>@{{ produto.id }}</td>
-                                    <td>@{{ produto.nome }}</td>
+                                    <td>@{{ produto.descricao_resumida }}</td>
                                     <td>@{{ produto.quantidade }}</td>
                                     <td>@{{ produto.valor }}</td>
                                     <td>
@@ -128,7 +144,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="submit" class="btn btn-primary" @click="salvarProduto">Salvar</button>
                     </div>
                 </form>
             </div>
@@ -188,7 +204,13 @@
                             <div class="row">
                                 <label for="empresa" class="form-label">Tipo entrada</label>
                                 <div class="col-12">
-                                    <input type="text" class="form-control" v-model="buscarEmpresas.nome" @input="buscarEntrada">
+                                    <div class="d-flex">
+                                        <input type="text" class="form-control" v-model="buscarEmpresas.nome">
+                                        <button type="button" class="btn btn-primary" @click="buscarEntrada()">
+                                            <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
+                                        </button>
+                                    </div>
+
                                     <ul v-if="resultEntrada.length" class="list-group position-absolute w-100">
                                         <li v-for="empresa in resultEntrada" class="list-group-item" data-bs-dismiss="modal" @click="selecionarEntrada(empresa)">
                                             @{{ empresa.descricao }}
@@ -198,9 +220,42 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="pessoaModal" tabindex="-1" aria-labelledby="pessoaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Pesquisa Pessoa</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form @submit.prevent="salvar">
+                    <input type="hidden" v-model="produtoIndex">
+                    <div class="mb-3 d-flex align-items-end gap-2">
+                        <div class="flex-grow-1">
+                            <div class="row">
+                                <label for="empresa" class="form-label">Nome</label>
+                                <div class="col-12">
+                                    <div class="d-flex">
+                                        <input type="text" class="form-control" v-model="buscarPessoas">
+                                        <button type="button" class="btn btn-primary" @click="buscarPessoa()">
+                                            <img src="{{ asset('/icon/search.svg') }}" alt="Buscar" width="24" height="24">
+                                        </button>
+                                    </div>
+                                    <ul v-if="resultPessoa.length" class="list-group position-absolute w-100">
+                                        <li v-for="empresa in resultPessoa" class="list-group-item" data-bs-dismiss="modal" @click="selecionarPessoa(empresa)">
+                                            @{{ empresa.nome }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -208,6 +263,20 @@
     </div>
 </div>
 
+<style>
+    .status {
+        display: grid;
+        place-items: center !important;
+        /* Centraliza tanto vertical quanto horizontalmente */
+        height: 100%;
+        width: 100%;
+    }
+
+    .status-rejeitado {
+        color: red !important;
+        font-weight: bold;
+    }
+</style>
 
 <!-- Vue.js via CDN -->
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
@@ -222,9 +291,14 @@
                     nome: "{{ $entrada->empresa->nome ?? '' }}"
                 },
                 tipoEntrada: {
-                    id: '',
-                    descricao: ''
+                    id: "{{ $entrada->tipoentrada->id ?? '' }}",
+                    descricao: "{{ $entrada->tipoentrada->descricao ?? '' }}"
                 },
+                pessoa: {
+                    id: "{{ $entrada->pessoa->id ?? '' }}",
+                    nome: "{{ $entrada->pessoa->nome ?? '' }}"
+                },
+                status: "{{ $entrada->status ?? '' }}",
                 fornecedor: '',
                 produtos: [],
                 novoProduto: {
@@ -237,13 +311,32 @@
                     id: '',
                     nome: ''
                 },
+                buscarPessoas: '',
                 produtoIndex: '',
                 sugestoes: [],
                 resultEmpresa: [],
-                resultEntrada: []
+                resultEntrada: [],
+                resultPessoa: [],
             };
         },
         methods: {
+            async carregarProdutos(){
+                try {
+                    const response = await fetch(`/api/produtoentrada/index?id=${this.numeroEntrada}`);
+                    this.produtos = await response.json();
+                    console.log(this.produtos)
+
+                } catch (error) {
+                    console.error('Erro ao buscar Pessoa:', error);
+                }
+            },
+
+            getStatusColor(status) {
+                if (status === 'Criada') return '#28a745 ';
+                if (status === 'Concluida') return '#3498db';
+                if (status === 'Cancelada') return '#dc3545';
+                return 'black';
+            },
 
             salvar() {
                 if (this.produtoIndex === '') {
@@ -316,10 +409,19 @@
 
             async buscarEntrada() {
                 try {
-                    const response = await fetch(`/api/tipoentrada/index?q=${this.buscarEmpresas.nome}`);
+                    const response = await fetch(`/api/tipoentrada/index?tipo_entrada=${this.buscarEmpresas.nome}`);
                     this.resultEntrada = await response.json();
                 } catch (error) {
                     console.error('Erro ao buscar Empresa:', error);
+                }
+            },
+
+            async buscarPessoa() {
+                try {
+                    const response = await fetch(`/api/pessoas/index?nome=${this.buscarPessoas}`);
+                    this.resultPessoa = await response.json();
+                } catch (error) {
+                    console.error('Erro ao buscar Pessoa:', error);
                 }
             },
 
@@ -333,21 +435,60 @@
                 this.tipoEntrada.id = empresa.id;
                 this.tipoEntrada.descricao = empresa.descricao;
                 this.resultEntrada = [];
-                console.log('teste', this.tipoEntrada)
+
+            },
+
+            selecionarPessoa(empresa) {
+                this.pessoa.id = empresa.id;
+                this.pessoa.nome = empresa.nome;
+                this.resultPessoa = [];
+                this.buscarPessoas = ''
             },
 
             async salvarEntrada() {
+                if (!this.numeroEntrada) {
+                    try {
+                        const response = await fetch('/api/entradas', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                empresa_id: this.empresa.id,
+                                data_entrada: new Date().toISOString().split('T')[0],
+                                id_tipoentrada: this.tipoEntrada.id,
+                                id_pessoa: this.pessoa.id
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            this.numeroEntrada = data.entrada.id;
+                            alert('Entrada salva com sucesso!');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar entrada:', error);
+                    }
+                } else {
+                    alert('put')
+                }
+            },
+
+            async salvarProduto() {
                 try {
-                    const response = await fetch('/api/entradas', {
+                    const response = await fetch('/api/entradaproduto', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         },
                         body: JSON.stringify({
-                            empresa_id: this.empresa.id,
-                            data_entrada: new Date().toISOString().split('T')[0],
-                            id_tipoentrada: this.tipoEntrada.id
+                            entrada_id: this.numeroEntrada,
+                            produto_id: this.novoProduto.id,
+                            valor: this.novoProduto.valor,
+                            quantidade: this.novoProduto.quantidade
                         })
                     });
 
@@ -355,14 +496,18 @@
 
                     if (data.success) {
                         this.numeroEntrada = data.entrada.id;
-                        alert('Entrada salva com sucesso!');
+                        alert('Produto salva com sucesso!');
                     }
                 } catch (error) {
                     console.error('Erro ao salvar entrada:', error);
                 }
             }
 
+        },
+        mounted() {
+            this.carregarProdutos();
         }
+
     });
 
     app.mount('#app');

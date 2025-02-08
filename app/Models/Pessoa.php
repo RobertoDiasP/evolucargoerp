@@ -20,4 +20,9 @@ class Pessoa extends Model
     public function licenca() {
         return $this->belongsTo(Licenca::class, 'id_licenca');
     }
+
+    public function entradas()
+    {
+        return $this->hasMany(Entrada::class, 'id_pessoa');
+    }
 }

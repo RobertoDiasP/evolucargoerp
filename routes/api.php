@@ -40,3 +40,5 @@ Route::middleware(['web', 'auth'])->get('/relacionamento/index', [Relacionamento
 Route::middleware(['web', 'auth'])->post('/relacionamento', [RelacionamentoController::class, 'store']);
 Route::middleware(['web', 'auth'])->post('/tipoentrada', [TipoEntradaController::class, 'store']);
 Route::middleware(['web', 'auth'])->get('/tipoentrada/index', [TipoEntradaController::class, 'buscarTipoEntrada']);
+Route::middleware(['web', 'auth'])->post('/entradaproduto', [EntradaController::class, 'storeProduto']);
+Route::middleware(['web', 'auth'])->get('/produtoentrada/index', [EntradaController::class, 'buscarProdutoEntrada']);

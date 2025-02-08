@@ -11,7 +11,7 @@ class Entradaproduto extends Model
 
     protected $table = 'entradaprodutos';
 
-    protected $fillable = ['entrada_id', 'produto_id', 'quantidade'];
+    protected $fillable = ['entrada_id', 'produto_id', 'quantidade', 'valor'];
 
     public function entrada()
     {
