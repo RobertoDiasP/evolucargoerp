@@ -28,6 +28,8 @@ class EntradaController extends Controller
             'data_entrada' => $request->data_entrada,
             'id_tipoentrada' => $request->id_tipoentrada,
             'id_pessoa' => $request->id_pessoa,
+            'id_tipocobranca' => $request->id_tipocobranca,
+            'id_planopagamento' => $request->id_planopagamento,
             'status' => 'Criada'
         ]);
 
@@ -67,7 +69,6 @@ class EntradaController extends Controller
         }
     }
 
-
     public function storeProduto(Request $request)
     {
         $entradaProduto = Entradaproduto::create([
@@ -78,5 +79,14 @@ class EntradaController extends Controller
 
         ]);
         return response()->json(['success' => true, 'entradaProduto' => $entradaProduto]);
+    }
+
+    public function deleteProduto(Request $request)
+    {
+        $produto = Entradaproduto::find($request->id);
+
+        $produto->delete();
+
+        return response()->json(['message' => 'Registro excluído com sucesso.'], 200);
     }
 }

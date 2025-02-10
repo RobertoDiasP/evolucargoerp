@@ -10,7 +10,7 @@ class TipoEntrada extends Model
     use HasFactory;
     protected $table = 'tipoentrada';
 
-    protected $fillable = ['descricao', 'id_licenca'];
+    protected $fillable = ['descricao', 'id_licenca', 'gera_conta_receber', 'atualiza_estoque', 'atualiza_preco'];
 
     /**
      * Relacionamento com a tabela 'entrada' (1 tipo de entrada pode estar em várias entradas).

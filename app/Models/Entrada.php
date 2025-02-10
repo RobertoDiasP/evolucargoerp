@@ -11,7 +11,7 @@ class Entrada extends Model
 
     protected $table = 'entradas';
 
-    protected $fillable = ['empresa_id', 'produto_id', 'quantidade', 'data_entrada','id_tipoentrada', 'id_pessoa', 'status'];
+    protected $fillable = ['empresa_id', 'produto_id', 'quantidade', 'data_entrada', 'id_tipoentrada', 'id_pessoa', 'status'];
 
     // Relacionamento com Empresa
     public function empresa()
@@ -24,7 +24,7 @@ class Entrada extends Model
     {
         return $this->belongsTo(Produto::class);
     }
-    
+
     public function produtos()
     {
         return $this->hasMany(Entradaproduto::class);
@@ -38,5 +38,20 @@ class Entrada extends Model
     public function pessoa()
     {
         return $this->belongsTo(Pessoa::class, 'id_pessoa');
+    }
+
+    public function contasPagar()
+    {
+        return $this->hasMany(ContasPagar::class, 'id_entrada');
+    }
+
+    public function tipoCobranca()
+    {
+        return $this->belongsTo(TipoCobranca::class, 'id_tipocobranca');
+    }
+
+    public function planoPagamento()
+    {
+        return $this->belongsTo(PlanoPagamento::class, 'id_planopagamento');
     }
 }

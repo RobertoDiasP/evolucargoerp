@@ -8,6 +8,9 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\RelacionamentoController;
 use App\Http\Controllers\TipoEntradaController;
+use App\Http\Controllers\ContasPagarController;
+use App\Http\Controllers\PlanoPagamentoController;
+use App\Http\Controllers\TipoCobrancaController;
 
 
 /*
@@ -41,4 +44,9 @@ Route::middleware(['web', 'auth'])->post('/relacionamento', [RelacionamentoContr
 Route::middleware(['web', 'auth'])->post('/tipoentrada', [TipoEntradaController::class, 'store']);
 Route::middleware(['web', 'auth'])->get('/tipoentrada/index', [TipoEntradaController::class, 'buscarTipoEntrada']);
 Route::middleware(['web', 'auth'])->post('/entradaproduto', [EntradaController::class, 'storeProduto']);
+Route::middleware(['web', 'auth'])->post('/entradaproduto/delete', [EntradaController::class, 'deleteProduto']);
 Route::middleware(['web', 'auth'])->get('/produtoentrada/index', [EntradaController::class, 'buscarProdutoEntrada']);
+Route::middleware(['web', 'auth'])->post('/contaspagar', [ContasPagarController::class, 'store']); // todo
+Route::middleware(['web', 'auth'])->get('/buscarPlano/index', [PlanoPagamentoController::class, 'buscarPlano']);
+Route::middleware(['web', 'auth'])->get('/buscarTipoCobranca/index', [TipoCobrancaController::class, 'buscarTipoCobranca']);
+Route::middleware(['web', 'auth'])->get('/parcelasentrada/index', [ContasPagarController::class, 'buscarParcelaEntrada']);
